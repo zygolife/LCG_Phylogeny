@@ -1,11 +1,13 @@
 #!/usr/bin/bash
-#SBATCH --ntasks 8 --mem 24G --time 0:30:00 -p short -N 1
+#SBATCH --ntasks 8 --mem 24G --time 0:30:00 -p short -N 1 --out logs/03_aln_step.log -C xeon
 module unload perl
 module unload python
 module load parallel
 module load hmmer/3
 module unload miniconda2
 module load miniconda3
+module load workspace/scratch
+
 if [ ! -f config.txt ]; then
 	echo "Need config.txt for PHYling"
 	exit
@@ -16,5 +18,11 @@ if [ ! -z $PREFIX ]; then
 	rm -rf aln/$PREFIX
 fi
 # probably should check to see if allseq is newer than newest file in the folder?
-echo " I will remove prefix.tab to make sure it is regenerated"
+if [ ! -s pep/allseq ]; then
+	cat pep/*.aa.fasta > $SCRATCH/allseq
+	esl-sfetch --index $SCRATCH/allseq
+	mv $SCRATCH/allseq $SCRATCH/allseq.ssi pep
+fi
+exit
+
 ./PHYling_unified/PHYling aln -c -q slurm
