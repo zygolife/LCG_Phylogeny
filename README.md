@@ -1,2 +1,1 @@
-# LCG_Phylogeny
-Low Coverage Genome zygomycete Phylogeny project
+# Phylogeny for low coverage genomes
