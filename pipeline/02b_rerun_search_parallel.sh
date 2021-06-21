@@ -12,9 +12,5 @@ if [ ! -f config.txt ]; then
 fi
 
 source config.txt
-if [ ! -z $PREFIX ]; then
-	rm -rf aln/$PREFIX
-fi
 # probably should check to see if allseq is newer than newest file in the folder?
-echo " I will remove prefix.tab to make sure it is regenerated"
 ./PHYling_unified/PHYling search -q parallel
