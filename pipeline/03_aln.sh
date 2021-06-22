@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#SBATCH --ntasks 24--mem 24G --time 0:30:00 -p short -N 1 --out logs/03_aln_step.log -C xeon
+#SBATCH --ntasks 48 --mem 48G --time 2:00:00 -p short -N 1 --out logs/03_aln_step.%A.log -C xeon
 module unload perl
 module unload python
 module load parallel
@@ -24,4 +24,4 @@ if [ ! -s pep/allseq.ssi ]; then
 	mv $SCRATCH/allseq $SCRATCH/allseq.ssi pep
 fi
 
-./PHYling_unified/PHYling aln -c -q slurm
+./PHYling_unified/PHYling aln -q parallel
